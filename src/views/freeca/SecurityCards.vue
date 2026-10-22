@@ -5,8 +5,8 @@
     <van-tabs :line-width="20" v-model="active" @change="onClickTab">
       <van-tab title="可使用">
       </van-tab>
-      <van-tab title="不可用">
-      </van-tab>
+      <!-- <van-tab title="不可用">
+      </van-tab> -->
       <van-tab title="卡合并">
       </van-tab>
     </van-tabs>
@@ -14,7 +14,7 @@
     <div>
       <p class="filter" v-if="active == 0">
         <span @click="cardsort(0, $event)" class="select">可使用</span>
-        <span @click="cardsort(1, $event)" class="select">即将过期</span>
+        <!-- <span @click="cardsort(1, $event)" class="select">即将过期</span> -->
         <span @click="sortA(2, $event)" class="select sort" style="position: relative;padding-right: 20px;">
           点数
 
@@ -217,6 +217,15 @@ export default {
     console.log(sessionStorage.getItem("change"))
     if (this.active == 0) {
       this.sess = 0
+    }
+  },
+  activated() {
+    // 每次进入该页面（包括从缓存中恢复）都会执行
+    this.loadingflag = true
+    this.list = []
+    this.list2 = []
+    if (this.active == 0 || this.active == 1) {
+      this.getCards()
     }
   },
   created() {
