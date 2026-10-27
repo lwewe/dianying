@@ -130,8 +130,9 @@
 <!--        </div>-->
       </div>
     </div>
+
     <div class="btnBox">
-      <div class="paybtn" :class="{paybtn2:showSt==2}" @click="buyticket()">立即{{showSt==2?'预购':'购票'}}</div>
+      <!-- <div class="paybtn" :class="{paybtn2:showSt==2}" @click="buyticket()">立即{{showSt==2?'预购':'购票'}}</div> -->
     </div>
 
   </div>
