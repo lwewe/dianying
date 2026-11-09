@@ -181,9 +181,9 @@ export default {
       this.$router.push({ path: "/package", query: { cardId: this.cardid } })
     },
     goIndex() {
-      if (this.pid == 1 || this.pid == 5 || this.pid == 14) {
+      if (this.pid == 1 || this.pid == 5 || this.pid == 14 || this.pid == 15 ) {
         window.location.href = this.$store.state.shopUrl + "/index" + "?token=" + localStorage.getItem("token") + "&full=0"
-      } else if (this.pid == 2 || this.pid == 6) {
+      } else if (this.pid == 2 || this.pid == 6 || this.pid == 16) {
         window.location.href = this.$store.state.cakeUrl + "/index" + "?token=" + localStorage.getItem("token")
       } else if (this.pid == 3 || this.pid == 7) {
         this.$router.push({ path: "/index" })

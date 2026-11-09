@@ -382,7 +382,28 @@ export default {
               borderTextColor = "#ED373B"
             }
 
-          } else if (item.pid == 2) {
+          } else if (item.pid == 15) {
+            backImg = require("../../assets/newico/1.png")
+            backImg2 = require("../../assets/newico/1.png")
+            cardName = "超级A卡"
+            colorText2 = "#8F8675"
+            gradient = "#E9D8C0,#D8B184"
+            btnGradient = "#F4E6C6,#DABC8F"
+            btnColor = "#845E34"
+            iconColor = "#EDDCBD"
+            borderColor = "#F4CEB1"
+            borderTextColor = "#ED373B"
+          }else if (item.pid == 16) {
+            backImg = require("../../assets/newico/2.png")
+            backImg2 = require("../../assets/newico/2.png")
+            cardName = "蛋糕A卡"
+            colorText2 = "#F57488"
+            gradient = "#F6747F,#EB5D6F"
+            btnGradient = "#F37682,#F36374"
+            btnColor = "#FDF4F5"
+            iconColor = "#F23150"
+          }
+          else if (item.pid == 2) {
             backImg = require("../../assets/newico/2.png")
             backImg2 = require("../../assets/newico/2.png")
             cardName = "蛋糕卡"
@@ -391,7 +412,9 @@ export default {
             btnGradient = "#F37682,#F36374"
             btnColor = "#FDF4F5"
             iconColor = "#F23150"
-          } else if (item.pid == 3) {
+          }
+          
+          else if (item.pid == 3) {
             backImg = require("../../assets/newico/3.png")
             backImg2 = require("../../assets/newico/3.png")
             cardName = "电影卡"
@@ -589,9 +612,9 @@ export default {
     go(pid) {
       console.log(pid)
 
-      if (pid == 1 || pid == 5 || pid == 14) {
+      if (pid == 1 || pid == 5 || pid == 14 || pid == 15) {
         window.location.href = this.$store.state.shopUrl + "/index" + "?token=" + localStorage.getItem("token") + "&full=0"
-      } else if (pid == 2 || pid == 6) {
+      } else if (pid == 2 || pid == 6 || pid == 16) {
         window.location.href = this.$store.state.cakeUrl + "/index" + "?token=" + localStorage.getItem("token")
       } else if (pid == 3 || pid == 7) {
         this.$router.push({ path: "/index" })
@@ -1113,6 +1136,7 @@ export default {
 
   }
 }
+
 /* 中间那个 tab 是 .van-tabs__nav 下的第 3 个元素（第 1 个是下划线，第 2 个是首个 tab，第 3 个就是它） */
 .securitycards ::v-deep .van-tabs__nav .van-tab:nth-child(3) {
   flex: 0 0 1px !important;
@@ -1127,5 +1151,4 @@ export default {
 .securitycards ::v-deep .van-tabs__nav .van-tab:nth-child(3) .van-ellipsis {
   display: none;
 }
- 
 </style>

@@ -4,7 +4,7 @@
     <div class="location">
     <ReturnBack :rcolor="'#fff'" :bcolor="'#00000087'"></ReturnBack>
     <div class="tab">
-      <van-tabs @click="changeType" v-model="active" title-active-color="#ED2E34" color="#F05B60"
+      <van-tabs @click="changeType" v-model="active" title-active-color="#000000" color="#F05B60"
                 title-inactive-color="#B0B0B0"
                 :line-width="15" :line-height="2">
         <van-tab title="全部"></van-tab>
@@ -15,12 +15,20 @@
     </div>
 <!--    列表-->
     <div v-if="orderList.length>0">
+      <!-- {{ orderList.length }} -->
       <OrderList :orderList="orderList"></OrderList>
     </div>
     <div ref="bottom" style="height: 10px;"></div>
+     <div class="none" v-if="orderList.length>0">
+      没有更多了
+     </div>
 <!--    没有更多了-->
-    <div class="none">
-      <div>--没有更多数据了--</div>
+    <div class="none" v-if="orderList == ''">
+      <div>
+        <img :src="noorder" alt="" class="imgOrder">
+        <div>
+          暂无订单
+        </div></div>
     </div>
   </div>
   </div>
@@ -36,6 +44,7 @@ export default {
   },
   data(){
     return{
+      noorder:require("@/assets/yj/noorder.png"),
       active:0,
       token:"",
       pageno:2,
@@ -47,9 +56,10 @@ export default {
   },
   methods: {
     changeType(e) {
-      if(this.active==e){
-        return
-      }
+      console.log(e)
+      // if(this.active==e){
+      //   return
+      // }
       this.active = e
       this.orderList = []
       this.pageno = 2
@@ -112,6 +122,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .imgOrder{
+    width: 260px;
+  }
 .location{
   background-color: #F4F4F4;
   min-height: 100vh;

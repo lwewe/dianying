@@ -1,32 +1,49 @@
 <template>
   <div class="cardinfo">
-    <NProgress v-if="loadingflag"/>
+    <NProgress v-if="loadingflag" />
     <ReturnBack :rcolor="'#fff'" :bcolor="'#00000087'"></ReturnBack>
     <div class="cardbody">
       <!-- 福利卡 -->
       <!-- 超级卡 -->
       <div style="height: 20px;"></div>
-      <div v-for="(item,index) in cardinfo" :id="item.pid" :key="index">
-        <div class="card1" :style="'backgroundImage:url('+cardInfo.backImg2+')'"
-             v-if="cardInfo.cardName.includes('卡')">
+      <div v-for="(item, index) in cardinfo" :id="item.pid" :key="index">
+        <div class="card1" :style="'backgroundImage:url(' + cardInfo.backImg2 + ')'" v-if="cardInfo.cardName.includes('卡')">
           <div class="left">
-            <div class="cardtitle" :class="{cardtitle2:item.pid != 1&&item.pid != 9}" style="padding-top: 2px;" :style="'background: linear-gradient(to right,'+cardInfo.btnGradient+'); -webkit-background-clip: text;\n'+
-'  background-clip: text;\n'+
-'  color: transparent;'">{{ cardInfo.cardName }}
+
+            <div class="cardtitle" :class="{ cardtitle2: item.pid != 1 && item.pid != 9 }"
+              style="padding-top: 2px;display: flex;" :style="'background: linear-gradient(to right,' + cardInfo.btnGradient + '); -webkit-background-clip: text;\n' +
+                '  background-clip: text;\n' +
+                '  color: transparent;'"><img v-if="item.pid == 1" src="../../assets/card/23.png" alt=""
+                style="width: 40px;height: 37px;">{{ cardInfo.cardName }}
             </div>
-            <div class="cardaccount" :style="'color:'+cardInfo.colorText2+''">{{ item.num }}</div>
-            <p class="cardinfo" :style="'color:'+cardInfo.colorText2+''"><span>余额(点)</span> <span>有效期</span></p>
-            <p class="cardinforesult" :style="'background: linear-gradient(to bottom,'+cardInfo.btnGradient+');-webkit-background-clip: text;\n'+
-'  background-clip: text;\n'+
-'  color: transparent;'"><span>{{ item.price }}</span> <span>{{ timestampToTime(end_time) }}</span></p>
+            <div class="cardaccount" :style="'color:' + cardInfo.colorText2 + ''">{{ item.num }}</div>
+            <div class="cardinfo" :style="'color:' + cardInfo.colorText2 + ''"><span>余额(点)</span> <span>有效期</span></div>
+            <div class="cardinforesult" :style="'background: linear-gradient(to bottom,' + cardInfo.btnGradient + ');-webkit-background-clip: text;\n' +
+              '  background-clip: text;\n' +
+              '  color: transparent;'"><span>{{ item.price }}</span> <span>{{ timestampToTime(end_time) }}</span></div>
           </div>
           <div class="right">
 
           </div>
         </div>
+        <!--  -->
+        <div :class="{ card5:cardInfo.pid!=14 }" :style="'backgroundImage:url(' + backImg + ');background-size:100% 100%'" v-else>
 
-        <div class="card5" :style="'backgroundImage:url('+backImg+')'" v-else>
-          <div class="left">
+          <div class="cardgh" v-if="cardInfo.pid == 14">
+            <div class="ghxfq">
+              <div class="ghprice">{{ item.price }}</div>
+            </div>
+            <div style="flex: 1; font-size: 12px;color: #676767;">
+               <div class="ghname" style="color: #000;font-size: 18px; font-weight: 700;">{{ cardName }}</div>
+              
+              
+                <div class="ghtime">有效期至：{{ timestampToTime(end_time) }}</div>
+
+                <div class="ghnum" style="text-align: right;margin-top: 10px;">{{ item.num }}</div>
+            </div>
+          </div>
+
+          <div class="left" v-else>
             <div class="cardtitle">{{ cardName }}</div>
             <div class="cardaccount pricetext">{{ item.num }}</div>
             <div class="priceBox">
@@ -40,7 +57,11 @@
               </div>
             </div>
           </div>
+
         </div>
+
+
+        <!--  -->
       </div>
       <ul class="list">
         <li @click="goconsumptionRecords()">
@@ -48,28 +69,28 @@
             <img src="../../assets/card/Group 868.png" alt="">
             <span>消费记录</span>
           </p>
-          <van-icon size="20px" color="gray" name="arrow"/>
+          <van-icon size="20px" color="gray" name="arrow" />
         </li>
         <li @click="goRechargeRecords()">
           <p>
             <img src="../../assets/card/Group 866.png" alt="">
             <span>充值记录</span>
           </p>
-          <van-icon size="20px" color="gray" name="arrow"/>
+          <van-icon size="20px" color="gray" name="arrow" />
         </li>
         <li @click="goIndex">
           <p>
             <img src="../../assets/card/Group 908.png" alt="">
             <span>去使用</span>
           </p>
-          <van-icon size="20px" color="gray" name="arrow"/>
+          <van-icon size="20px" color="gray" name="arrow" />
         </li>
         <li @click="delCard" style="border: none">
           <p>
             <img src="../../assets/fukaxq/del.png" alt="">
             <span>删除福利卡</span>
           </p>
-          <van-icon size="20px" color="gray" name="arrow"/>
+          <van-icon size="20px" color="gray" name="arrow" />
         </li>
       </ul>
     </div>
@@ -90,9 +111,8 @@
 }, -->
 
 <script>
-import {getCardInfo} from "@/api/minecard"
-import {delcard, mergecards} from "@/api/locality/card";
-
+import { getCardInfo } from "@/api/minecard"
+import { delcard, mergecards } from "@/api/locality/card";
 export default {
 
   data() {
@@ -126,7 +146,7 @@ export default {
   },
   created() {
 
-//加载
+    //加载
     this.loadingflag = true
   },
 
@@ -146,9 +166,9 @@ export default {
         }).then(res => {
           this.$toast(res.msg)
           if (res.code == 200 && res.status == 3) {
-           setTimeout(()=>{
-             this.$router.go(-1)
-           },1000)
+            setTimeout(() => {
+              this.$router.go(-1)
+            }, 1000)
           }
         })
       }).catch(() => {
@@ -158,15 +178,15 @@ export default {
     //   window.location.href = this.$store.state.shopUrl+"/index"
     // },
     toRecharge() {
-      this.$router.push({path: "/package", query: {cardId: this.cardid}})
+      this.$router.push({ path: "/package", query: { cardId: this.cardid } })
     },
     goIndex() {
-      if (this.pid == 1 || this.pid == 5) {
+      if (this.pid == 1 || this.pid == 5 || this.pid == 14) {
         window.location.href = this.$store.state.shopUrl + "/index" + "?token=" + localStorage.getItem("token") + "&full=0"
       } else if (this.pid == 2 || this.pid == 6) {
         window.location.href = this.$store.state.cakeUrl + "/index" + "?token=" + localStorage.getItem("token")
       } else if (this.pid == 3 || this.pid == 7) {
-        this.$router.push({path: "/index"})
+        this.$router.push({ path: "/index" })
       } else if (this.pid == 9) {
         window.location.href = this.$store.state.shopUrl + "/index" + "?token=" + localStorage.getItem("token") + "&full=1"
       }
@@ -175,7 +195,7 @@ export default {
 
     },
     gocardinfo() {
-      this.$router.push({path: "/cardinfo"})
+      this.$router.push({ path: "/cardinfo" })
     },
     getCards() {
       getCardInfo({
@@ -209,24 +229,23 @@ export default {
     },
     // 跳转到消费记录
     goconsumptionRecords() {
-      this.$router.push({path: "/consumptionRecords", query: {cardId: this.cardid}})
+      this.$router.push({ path: "/consumptionRecords", query: { cardId: this.cardid } })
     },
     goRechargeRecords() {
-      this.$router.push({path: "/RechargeRecords", query: {cardId: this.cardid}})
+      this.$router.push({ path: "/RechargeRecords", query: { cardId: this.cardid } })
     }
   },
 };
 </script>
 
 <style scoped>
-* { /* CSS Reset */
+* {
+  /* CSS Reset */
   margin: 0;
   padding: 0;
 }
 
-.cardinfo {
-
-}
+.cardinfo {}
 
 .cardinfo .cardbody {
   height: 100vh;
@@ -279,10 +298,10 @@ export default {
 /* 超级卡 */
 .cardinfo .cardbody .card1:nth-of-type(1) {
   width: 100%;
-  height: 200px;
-  background: url(../../assets/card/881.png);
+  height: 150px;
+  background: url(../../assets/newico/881.png);
   background-size: cover;
-  border-radius: 20px;
+  border-radius: 6px;
   /* margin-top: 15px; */
   display: flex;
 }
@@ -295,8 +314,8 @@ export default {
   font-weight: 800;
   font-size: 24px;
   display: inline-block;
-  margin-top: 50px;
-  margin-left: 50px;
+  margin-top: 21px;
+  margin-left: 21px;
 }
 
 .cardinfo .cardbody .card1 .left .cardaccount {
@@ -309,7 +328,7 @@ export default {
 .cardinfo .cardbody .card1 .left .cardinfo {
   font-size: 13px;
   margin-left: 25px;
-  margin-top: 30px;
+  margin-top: 16px;
 }
 
 .cardinfo .cardbody .card1 .left .cardinfo span {
@@ -322,7 +341,7 @@ export default {
   font-size: 15px;
   font-weight: 600;
   margin-left: 25px;
-  margin-top: 10px;
+  margin-top: 4px;
 }
 
 .cardinfo .cardbody .cardinforesult span {
@@ -389,7 +408,19 @@ export default {
   line-height: 37px;
   background-color: #ED3036;
 }
-
+.cardgh{ height: 98px;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+ 
+  align-items: center;
+  font-size: 13px; padding: 15px 10px 18px;
+}
+.ghxfq{width: 100px;color: #5cb862;font-size: 28px;text-align: center;}
+.ghname,.ghtime{
+  padding-left: 15px;
+}
 .card5 {
   height: 98px;
   background-size: 100% 100%;
