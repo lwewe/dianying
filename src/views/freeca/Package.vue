@@ -13,6 +13,8 @@
 <!--          "pid": "3", //卡类型 1-超级卡,2-蛋糕卡,3-电影卡,4-图书卡,5-超级券,6-蛋糕券,7-电影券,8-图书券 全部返回-->
             <div class="title">
               <div v-if="cardInfo.pid==1">超级卡</div>
+              <div v-if="cardInfo.pid==15">超级A卡</div>
+              <div v-if="cardInfo.pid==16">蛋糕A卡</div>
               <div v-if="cardInfo.pid==2">蛋糕卡</div>
               <div v-if="cardInfo.pid==3">电影卡</div>
               <div v-if="cardInfo.pid==4">图书卡</div>
